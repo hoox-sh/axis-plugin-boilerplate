@@ -1,26 +1,29 @@
 # AXIS plugin boilerplate
 
-Starter template for **[AXIS](https://hoox.sh/axis)** plugins.
+**AXIS plugin boilerplate** — starter for source, stream, engine, dataset, and
+component plugins.
 
-AXIS is a SolidJS + Vite charting PWA. Historical bars, live ticks, Pine
-evaluation, on-chain datasets, and some UI slots are **plugins** under the
-namespace:
+**Website:** [hoox.sh/axis](https://hoox.sh/axis) ·
+**Docs:** [hoox.sh/axis/docs/plugins](https://hoox.sh/axis/docs/plugins) ·
+**Repo:** [hoox-sh/axis-plugin-boilerplate](https://github.com/hoox-sh/axis-plugin-boilerplate)
 
-```
-pynescript.axis.plugins.v1
-```
+Use this GitHub **template** to ship an ES module AXIS can install from URL
+(`pynescript.axis.plugins.v1`). The default plugin is an offline **Hello Source**;
+`src/examples/` covers every kind the dynamic loader accepts.
 
-This repo ships a working offline **source** plus copy-paste examples for every
-kind the dynamic loader accepts.
+Part of the **[HOOX](https://hoox.sh)** open trading stack:
+
+| Product | Role | Repo |
+|---------|------|------|
+| **HOOX** | Edge trading framework | [hoox-sh/hoox](https://github.com/hoox-sh/hoox) |
+| **PYNE** | Pine Script™ toolchain + Pro API | [hoox-sh/pyne](https://github.com/hoox-sh/pyne) |
+| **AXIS** | Charting PWA (host) | [hoox-sh/axis](https://github.com/hoox-sh/axis) |
+| **This repo** | Plugin starter (source / stream / engine / dataset / component) | [hoox-sh/axis-plugin-boilerplate](https://github.com/hoox-sh/axis-plugin-boilerplate) |
+| **pyne-agent-worker** | NL → PYNE component plugin | [hoox-sh/pyne-agent-worker](https://github.com/hoox-sh/pyne-agent-worker) |
 
 **Docs:** [Plugin contracts](https://hoox.sh/axis/docs/plugins/contracts) ·
 [Dynamic loader](https://hoox.sh/axis/docs/plugins/dynamic-loader) ·
 [Plugin examples](https://hoox.sh/axis/docs/reference/plugin-examples)
-
-**Sister repos:** [axis](https://github.com/hoox-sh/axis) ·
-[pyne](https://github.com/hoox-sh/pyne) ·
-[pyne-agent-worker](https://github.com/hoox-sh/pyne-agent-worker) ·
-[hoox](https://github.com/hoox-sh/hoox)
 
 Pine Script™ and TradingView® are trademarks of TradingView, Inc. Cloudflare®
 is a registered trademark of Cloudflare, Inc. This project is independent and

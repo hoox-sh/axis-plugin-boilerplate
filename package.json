@@ -5,7 +5,7 @@
   "license": "AGPL-3.0-only",
   "author": "jango_blockchained",
   "type": "module",
-  "description": "Starter template for AXIS plugins (source, stream, engine, dataset, component) — pynescript.axis.plugins.v1",
+  "description": "🔌 AXIS plugin boilerplate — starter for source, stream, engine, dataset, and component plugins. Website: hoox.sh/axis · stack: hoox.sh",
   "repository": {
     "type": "git",
     "url": "https://github.com/hoox-sh/axis-plugin-boilerplate.git"

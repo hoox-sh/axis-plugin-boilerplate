@@ -10,3 +10,5 @@ All notable changes to this project are documented here.
   dataset / component examples.
 - Vendored AXIS contracts (`pynescript.axis.plugins.v1`).
 - Bun build → `public/*.js`, CORS serve on `:4173`, contract tests.
+- Public GitHub template under **hoox-sh**; product description matches the
+  AXIS / HOOX org listing style.
