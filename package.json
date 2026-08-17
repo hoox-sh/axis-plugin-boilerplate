@@ -1,0 +1,41 @@
+{
+  "name": "@hoox-sh/axis-plugin-boilerplate",
+  "version": "0.1.0",
+  "private": true,
+  "license": "AGPL-3.0-only",
+  "author": "jango_blockchained",
+  "type": "module",
+  "description": "Starter template for AXIS plugins (source, stream, engine, dataset, component) — pynescript.axis.plugins.v1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hoox-sh/axis-plugin-boilerplate.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hoox-sh/axis-plugin-boilerplate/issues"
+  },
+  "homepage": "https://hoox.sh/axis",
+  "keywords": [
+    "axis",
+    "hoox",
+    "pyne",
+    "plugin",
+    "pinescript",
+    "charting",
+    "boilerplate"
+  ],
+  "scripts": {
+    "build": "bun scripts/build.ts",
+    "serve": "bun run build && bun scripts/serve.ts",
+    "dev": "bun run serve",
+    "test": "bun test tests/",
+    "typecheck": "tsc --noEmit",
+    "check": "bun run build && bun run typecheck && bun test tests/ && bun scripts/check-contract.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.8.0"
+  },
+  "engines": {
+    "bun": ">=1.1.0"
+  }
+}

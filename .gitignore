@@ -1,0 +1,49 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build
+dist/
+build/
+out/
+*.tsbuildinfo
+
+# Env & secrets
+.env
+.env.*
+!.env.example
+*.pem
+.wrangler/
+
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+*.swo
+*~
+
+# Test / coverage
+coverage/
+coverage.lcov
+.nyc_output/
+
+# Logs / cache
+*.log
+.cache/
+
+# Bun
+bun.lockb
+
+# Python helpers
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Agent scratch
+.agent-sync-notice.md
+.agent_sync*.md
+.agent-sync/

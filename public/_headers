@@ -1,0 +1,13 @@
+/*
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, HEAD, OPTIONS
+  Access-Control-Allow-Headers: Accept, Content-Type
+  Cross-Origin-Resource-Policy: cross-origin
+
+/*.js
+  Content-Type: text/javascript; charset=utf-8
+  Cache-Control: public, max-age=60
+
+/examples/*
+  Content-Type: text/javascript; charset=utf-8
+  Cache-Control: public, max-age=60

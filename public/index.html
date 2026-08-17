@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AXIS plugin boilerplate</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0b0f14;
+        --panel: #121821;
+        --text: #e8eaed;
+        --dim: #8b98a5;
+        --accent: #5b7cfa;
+        --border: #2a3441;
+      }
+      body {
+        margin: 0;
+        font: 15px/1.5 ui-sans-serif, system-ui, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+      }
+      main {
+        max-width: 720px;
+        margin: 48px auto;
+        padding: 0 20px;
+      }
+      h1 { font-size: 22px; font-weight: 650; letter-spacing: 0.01em; }
+      p, li { color: var(--dim); }
+      a { color: var(--accent); }
+      code, .url {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 13px;
+        color: var(--text);
+      }
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 14px 16px;
+        margin: 10px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>AXIS plugin boilerplate</h1>
+      <p>
+        ES modules for the AXIS charting PWA
+        (<code>pynescript.axis.plugins.v1</code>).
+        Paste a URL below into <strong>Manager → Plugins → Install</strong>.
+      </p>
+      <div class="card">
+        <div><strong>Default source</strong></div>
+        <div class="url" id="main"></div>
+      </div>
+      <div class="card">
+        <div><strong>Examples</strong></div>
+        <ul id="examples"></ul>
+      </div>
+      <p>
+        Sister product:
+        <a href="https://hoox.sh/axis">hoox.sh/axis</a>
+        ·
+        <a href="https://github.com/hoox-sh/axis">hoox-sh/axis</a>
+        ·
+        <a href="https://hoox.sh/axis/docs/plugins">plugin docs</a>
+      </p>
+    </main>
+    <script>
+      const origin = location.origin;
+      const main = origin + '/plugin.js';
+      document.getElementById('main').textContent = main;
+      const kinds = ['source', 'stream', 'engine', 'dataset', 'component'];
+      const ul = document.getElementById('examples');
+      for (const kind of kinds) {
+        const li = document.createElement('li');
+        li.innerHTML = '<code>' + origin + '/examples/' + kind + '.js</code>';
+        ul.appendChild(li);
+      }
+    </script>
+  </body>
+</html>
