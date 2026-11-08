@@ -47,3 +47,8 @@ venv/
 .agent-sync-notice.md
 .agent_sync*.md
 .agent-sync/
+
+# OpenOrchestrate runtime state
+.openorchestrate/state.db
+.openorchestrate/state.db-*
+.openorchestrate/logs/
