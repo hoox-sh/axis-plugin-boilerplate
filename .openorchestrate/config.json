@@ -3,9 +3,12 @@
   "project": {
     "id": "hoox-sh-axis-plugin-boilerplate",
     "name": "@hoox-sh/axis-plugin-boilerplate",
-    "description": "\ud83d\udd0c AXIS plugin boilerplate \u2014 starter for source, stream, engine, dataset, and component plugins. Website: hoox.sh/axis \u00b7 stack: hoox.sh",
+    "description": "🔌 AXIS plugin boilerplate — starter for source, stream, engine, dataset, and component plugins. Website: hoox.sh/axis · stack: hoox.sh",
     "kind": "project",
-    "languages": ["TypeScript", "JavaScript"],
+    "languages": [
+      "TypeScript",
+      "JavaScript"
+    ],
     "packageManager": "bun",
     "git": true
   },
@@ -71,7 +74,13 @@
   ],
   "board": {
     "file": "board.md",
-    "statuses": ["Todo", "Working", "Blocked", "Ready for Review", "Done"],
+    "statuses": [
+      "Todo",
+      "Working",
+      "Blocked",
+      "Ready for Review",
+      "Done"
+    ],
     "fields": [
       "task",
       "owner",
