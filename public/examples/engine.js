@@ -7,8 +7,7 @@ function resolveConfig(schema, config) {
     out[k] = def && "default" in def ? def.default : undefined;
   }
   for (const [k, v] of Object.entries(config || {})) {
-    if (v !== undefined)
-      out[k] = v;
+    if (v !== undefined) out[k] = v;
   }
   return out;
 }
@@ -18,12 +17,10 @@ function sma(values, period) {
   const n = Math.max(1, Math.floor(period));
   const out = new Array(values.length).fill(null);
   let sum = 0;
-  for (let i = 0;i < values.length; i++) {
+  for (let i = 0; i < values.length; i++) {
     sum += values[i];
-    if (i >= n)
-      sum -= values[i - n];
-    if (i + 1 >= n)
-      out[i] = sum / n;
+    if (i >= n) sum -= values[i - n];
+    if (i + 1 >= n) out[i] = sum / n;
   }
   return out;
 }
@@ -35,13 +32,20 @@ var exampleEngine = {
   description: "Offline SMA(close) engine. Replace run() with your evaluator.",
   capabilities: { offline: true, transport: "local" },
   configSchema: {
-    period: { type: "number", default: 14, min: 1, max: 500, label: "SMA period" }
+    period: {
+      type: "number",
+      default: 14,
+      min: 1,
+      max: 500,
+      label: "SMA period",
+    },
   },
   async isReady() {
     return true;
   },
   async run({ bars, config, signal }) {
-    const t0 = typeof performance !== "undefined" ? performance.now() : Date.now();
+    const t0 =
+      typeof performance !== "undefined" ? performance.now() : Date.now();
     try {
       if (signal?.aborted) {
         return { status: "error", plots: [], events: [], error: "aborted" };
@@ -58,11 +62,14 @@ var exampleEngine = {
         meta: {
           mode: "example-sma",
           count: bars.length,
-          ms: (typeof performance !== "undefined" ? performance.now() : Date.now()) - t0,
+          ms:
+            (typeof performance !== "undefined"
+              ? performance.now()
+              : Date.now()) - t0,
           overlay: true,
           script_name: "Example SMA",
-          transport: "local"
-        }
+          transport: "local",
+        },
       };
     } catch (err) {
       return {
@@ -71,13 +78,14 @@ var exampleEngine = {
         events: [],
         error: err instanceof Error ? err.message : String(err),
         meta: {
-          ms: (typeof performance !== "undefined" ? performance.now() : Date.now()) - t0
-        }
+          ms:
+            (typeof performance !== "undefined"
+              ? performance.now()
+              : Date.now()) - t0,
+        },
       };
     }
-  }
+  },
 };
 var engine_default = exampleEngine;
-export {
-  engine_default as default
-};
+export { engine_default as default };

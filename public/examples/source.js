@@ -5,12 +5,11 @@ var INTERVAL_SEC = {
   m: 60,
   h: 3600,
   d: 86400,
-  w: 604800
+  w: 604800,
 };
 function intervalToSec(interval) {
   const m = /^(\d+)([mhdw])$/.exec(String(interval || "").trim());
-  if (!m)
-    return 86400;
+  if (!m) return 86400;
   const n = parseInt(m[1], 10);
   return Math.max(1, n * (INTERVAL_SEC[m[2]] || 86400));
 }
@@ -20,29 +19,33 @@ function resolveConfig(schema, config) {
     out[k] = def && "default" in def ? def.default : undefined;
   }
   for (const [k, v] of Object.entries(config || {})) {
-    if (v !== undefined)
-      out[k] = v;
+    if (v !== undefined) out[k] = v;
   }
   return out;
 }
 function mulberry32(seed) {
   let s = seed >>> 0;
   return () => {
-    s = s + 1831565813 >>> 0;
+    s = (s + 1831565813) >>> 0;
     let t = s;
-    t = Math.imul(t ^ t >>> 15, t | 1);
-    t ^= t + Math.imul(t ^ t >>> 7, t | 61);
-    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 }
 function synthesizeWalk(opts) {
   const count = Math.max(1, Math.floor(opts.count));
   const step = intervalToSec(opts.interval);
-  const endSec = typeof opts.endTime === "number" && Number.isFinite(opts.endTime) && opts.endTime > 0 ? Math.floor(opts.endTime) : Math.floor(Date.now() / 1000);
+  const endSec =
+    typeof opts.endTime === "number" &&
+    Number.isFinite(opts.endTime) &&
+    opts.endTime > 0
+      ? Math.floor(opts.endTime)
+      : Math.floor(Date.now() / 1000);
   const rand = opts.seed && opts.seed > 0 ? mulberry32(opts.seed) : Math.random;
   const out = [];
   let price = opts.startPrice > 0 ? opts.startPrice : 100;
-  for (let i = count - 1;i >= 0; i--) {
+  for (let i = count - 1; i >= 0; i--) {
     const time = endSec - i * step;
     const drift = (rand() - 0.48) * price * 0.02;
     const open = price;
@@ -55,7 +58,7 @@ function synthesizeWalk(opts) {
       high,
       low,
       close,
-      volume: 100 + rand() * 1000
+      volume: 100 + rand() * 1000,
     });
     price = close;
   }
@@ -68,11 +71,12 @@ var exampleSource = {
   name: "Example Source",
   kind: "source",
   version: "0.1.0",
-  description: "Copy-paste starter: synthetic OHLCV. Swap fetchHistorical for a venue API.",
+  description:
+    "Copy-paste starter: synthetic OHLCV. Swap fetchHistorical for a venue API.",
   capabilities: { offline: true, transport: "local" },
   configSchema: {
     startPrice: { type: "number", default: 50, label: "Start price" },
-    limit: { type: "number", default: 200, min: 10, max: 5000, label: "Bars" }
+    limit: { type: "number", default: 200, min: 10, max: 5000, label: "Bars" },
   },
   async fetchHistorical({ interval, limit, endTime, config }) {
     const cfg = resolveConfig(this.configSchema, config);
@@ -82,11 +86,9 @@ var exampleSource = {
       interval,
       startPrice: Number(cfg.startPrice) || 50,
       endTime,
-      seed: 7
+      seed: 7,
     });
-  }
+  },
 };
 var source_default = exampleSource;
-export {
-  source_default as default
-};
+export { source_default as default };

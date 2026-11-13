@@ -9,19 +9,26 @@
  * Install: `http://127.0.0.1:4173/examples/stream.js`
  */
 
-import { intervalToSec, resolveConfig } from '../helpers';
-import type { Bar, StreamPlugin } from '../types';
+import { intervalToSec, resolveConfig } from "../helpers";
+import type { Bar, StreamPlugin } from "../types";
 
 const exampleStream: StreamPlugin = {
-  id: 'example-stream',
-  name: 'Example Stream',
-  kind: 'stream',
-  version: '0.1.0',
-  description: 'Synthetic poll stream. Replace start() with a WebSocket to a venue or Worker.',
-  capabilities: { offline: true, transport: 'local' },
+  id: "example-stream",
+  name: "Example Stream",
+  kind: "stream",
+  version: "0.1.0",
+  description:
+    "Synthetic poll stream. Replace start() with a WebSocket to a venue or Worker.",
+  capabilities: { offline: true, transport: "local" },
   configSchema: {
-    tickMs: { type: 'number', default: 1000, min: 100, label: 'Tick (ms)' },
-    volatility: { type: 'number', default: 0.005, min: 0, max: 0.5, label: 'Volatility' },
+    tickMs: { type: "number", default: 1000, min: 100, label: "Tick (ms)" },
+    volatility: {
+      type: "number",
+      default: 0.005,
+      min: 0,
+      max: 0.5,
+      label: "Volatility",
+    },
   },
   start({ interval, onBar, onStatus, lastBar, config }) {
     const cfg = resolveConfig(this.configSchema, config);
@@ -41,7 +48,11 @@ const exampleStream: StreamPlugin = {
           volume: 100,
         };
 
-    onStatus({ state: 'open', url: 'mock://example-stream', detail: 'synthetic poll' });
+    onStatus({
+      state: "open",
+      url: "mock://example-stream",
+      detail: "synthetic poll",
+    });
 
     const handle = setInterval(() => {
       if (stopped) return;
@@ -77,7 +88,7 @@ const exampleStream: StreamPlugin = {
     return () => {
       stopped = true;
       clearInterval(handle);
-      onStatus({ state: 'closed' });
+      onStatus({ state: "closed" });
     };
   },
 };

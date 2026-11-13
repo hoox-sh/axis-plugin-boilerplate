@@ -5,12 +5,11 @@ var INTERVAL_SEC = {
   m: 60,
   h: 3600,
   d: 86400,
-  w: 604800
+  w: 604800,
 };
 function intervalToSec(interval) {
   const m = /^(\d+)([mhdw])$/.exec(String(interval || "").trim());
-  if (!m)
-    return 86400;
+  if (!m) return 86400;
   const n = parseInt(m[1], 10);
   return Math.max(1, n * (INTERVAL_SEC[m[2]] || 86400));
 }
@@ -20,8 +19,7 @@ function resolveConfig(schema, config) {
     out[k] = def && "default" in def ? def.default : undefined;
   }
   for (const [k, v] of Object.entries(config || {})) {
-    if (v !== undefined)
-      out[k] = v;
+    if (v !== undefined) out[k] = v;
   }
   return out;
 }
@@ -32,34 +30,44 @@ var exampleDataset = {
   name: "Example Dataset",
   kind: "dataset",
   version: "0.1.0",
-  description: "Synthetic scalar series. Replace fetchDataset with DefiLlama / your metric API.",
+  description:
+    "Synthetic scalar series. Replace fetchDataset with DefiLlama / your metric API.",
   capabilities: { offline: true, transport: "local" },
   configSchema: {
     points: { type: "number", default: 90, min: 7, max: 2000, label: "Points" },
-    startValue: { type: "number", default: 1e6, label: "Start value" }
+    startValue: { type: "number", default: 1e6, label: "Start value" },
   },
   async searchInstruments(query) {
-    const q = String(query || "").trim().toLowerCase();
+    const q = String(query || "")
+      .trim()
+      .toLowerCase();
     const all = [
       {
         chainId: "all",
         protocolId: "hello",
         metric: "tvl",
-        symbol: "HELLO"
-      }
+        symbol: "HELLO",
+      },
     ];
-    if (!q)
-      return all;
-    return all.filter((i) => i.symbol.toLowerCase().includes(q) || String(i.protocolId || "").includes(q) || i.metric.includes(q));
+    if (!q) return all;
+    return all.filter(
+      (i) =>
+        i.symbol.toLowerCase().includes(q) ||
+        String(i.protocolId || "").includes(q) ||
+        i.metric.includes(q),
+    );
   },
   async fetchDataset(opts) {
     const cfg = resolveConfig(this.configSchema, opts.config);
     const count = opts.limit || Number(cfg.points) || 90;
     const step = intervalToSec(opts.resolution || "1d");
-    const end = typeof opts.endTime === "number" && opts.endTime > 0 ? Math.floor(opts.endTime) : Math.floor(Date.now() / 1000);
+    const end =
+      typeof opts.endTime === "number" && opts.endTime > 0
+        ? Math.floor(opts.endTime)
+        : Math.floor(Date.now() / 1000);
     let value = Number(cfg.startValue) || 1e6;
     const points = [];
-    for (let i = count - 1;i >= 0; i--) {
+    for (let i = count - 1; i >= 0; i--) {
       value = Math.max(1, value * (1 + (Math.sin(i / 7) * 0.02 + 0.001)));
       points.push({ time: end - i * step, value });
     }
@@ -67,7 +75,7 @@ var exampleDataset = {
       chainId: "all",
       protocolId: "hello",
       metric: "tvl",
-      symbol: "HELLO"
+      symbol: "HELLO",
     };
     return {
       id: `example-dataset:${instrument.protocolId || instrument.symbol}:${instrument.metric}`,
@@ -78,11 +86,9 @@ var exampleDataset = {
       asOf: end,
       finality: "unknown",
       provenance: { provider: "example-dataset" },
-      synthetic: true
+      synthetic: true,
     };
-  }
+  },
 };
 var dataset_default = exampleDataset;
-export {
-  dataset_default as default
-};
+export { dataset_default as default };

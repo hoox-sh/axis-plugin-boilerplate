@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import type { AnyPlugin, Bar, ConfigSchema, PluginKind } from './types';
+import type { AnyPlugin, Bar, ConfigSchema, PluginKind } from "./types";
 
 const INTERVAL_SEC: Record<string, number> = {
   m: 60,
@@ -14,7 +14,7 @@ const INTERVAL_SEC: Record<string, number> = {
 
 /** AXIS interval string (`1m`, `5m`, `1h`, `1d`, `1w`) → bar step in seconds. */
 export function intervalToSec(interval: string): number {
-  const m = /^(\d+)([mhdw])$/.exec(String(interval || '').trim());
+  const m = /^(\d+)([mhdw])$/.exec(String(interval || "").trim());
   if (!m) return 86_400;
   const n = parseInt(m[1]!, 10);
   return Math.max(1, n * (INTERVAL_SEC[m[2]!] || 86_400));
@@ -27,7 +27,7 @@ export function resolveConfig(
 ): Record<string, unknown> {
   const out: Record<string, unknown> = {};
   for (const [k, def] of Object.entries(schema || {})) {
-    out[k] = def && 'default' in def ? def.default : undefined;
+    out[k] = def && "default" in def ? def.default : undefined;
   }
   for (const [k, v] of Object.entries(config || {})) {
     if (v !== undefined) out[k] = v;
@@ -36,12 +36,12 @@ export function resolveConfig(
 }
 
 export function isFiniteNumber(n: unknown): n is number {
-  return typeof n === 'number' && Number.isFinite(n);
+  return typeof n === "number" && Number.isFinite(n);
 }
 
 /** Coerce a loose bar (seconds or ms time) into a valid {@link Bar}, or `null`. */
 export function normalizeBar(raw: unknown): Bar | null {
-  if (!raw || typeof raw !== 'object') return null;
+  if (!raw || typeof raw !== "object") return null;
   const o = raw as Record<string, unknown>;
   let time = Number(o.time);
   const open = Number(o.open);
@@ -56,7 +56,7 @@ export function normalizeBar(raw: unknown): Bar | null {
   if (o.volume != null && Number.isFinite(Number(o.volume))) {
     bar.volume = Number(o.volume);
   }
-  if (typeof o.closed === 'boolean') bar.closed = o.closed;
+  if (typeof o.closed === "boolean") bar.closed = o.closed;
   return bar;
 }
 
@@ -94,7 +94,9 @@ export function synthesizeWalk(opts: WalkOpts): Bar[] {
   const count = Math.max(1, Math.floor(opts.count));
   const step = intervalToSec(opts.interval);
   const endSec =
-    typeof opts.endTime === 'number' && Number.isFinite(opts.endTime) && opts.endTime > 0
+    typeof opts.endTime === "number" &&
+    Number.isFinite(opts.endTime) &&
+    opts.endTime > 0
       ? Math.floor(opts.endTime)
       : Math.floor(Date.now() / 1000);
   const rand = opts.seed && opts.seed > 0 ? mulberry32(opts.seed) : Math.random;
@@ -121,19 +123,19 @@ export function synthesizeWalk(opts: WalkOpts): Bar[] {
 }
 
 const KINDS: readonly PluginKind[] = [
-  'source',
-  'stream',
-  'engine',
-  'storage',
-  'dataset',
-  'component',
+  "source",
+  "stream",
+  "engine",
+  "storage",
+  "dataset",
+  "component",
 ];
 
 function asPlugin(mod: unknown): Record<string, unknown> | null {
-  if (!mod || typeof mod !== 'object') return null;
+  if (!mod || typeof mod !== "object") return null;
   const m = mod as Record<string, unknown>;
   const p = (m.default || m.plugin || m) as Record<string, unknown>;
-  if (!p || typeof p !== 'object') return null;
+  if (!p || typeof p !== "object") return null;
   return p;
 }
 
@@ -144,34 +146,34 @@ function asPlugin(mod: unknown): Record<string, unknown> | null {
  */
 export function assertPlugin(mod: unknown): AnyPlugin {
   const p = asPlugin(mod);
-  if (!p) throw new Error('Module did not export a plugin object');
+  if (!p) throw new Error("Module did not export a plugin object");
 
-  const id = String(p.id || '').trim();
+  const id = String(p.id || "").trim();
   const name = String(p.name || id).trim();
-  const kind = String(p.kind || '').trim() as PluginKind;
+  const kind = String(p.kind || "").trim() as PluginKind;
 
-  if (!id || !kind) throw new Error('Plugin needs id and kind');
-  if (!name) throw new Error('Plugin needs a name');
+  if (!id || !kind) throw new Error("Plugin needs id and kind");
+  if (!name) throw new Error("Plugin needs a name");
   if (!KINDS.includes(kind)) throw new Error(`Unknown plugin kind: ${kind}`);
 
-  if (kind === 'source' && typeof p.fetchHistorical !== 'function') {
-    throw new Error('Source plugin needs fetchHistorical()');
+  if (kind === "source" && typeof p.fetchHistorical !== "function") {
+    throw new Error("Source plugin needs fetchHistorical()");
   }
-  if (kind === 'stream' && typeof p.start !== 'function') {
-    throw new Error('Stream plugin needs start()');
+  if (kind === "stream" && typeof p.start !== "function") {
+    throw new Error("Stream plugin needs start()");
   }
-  if (kind === 'engine' && typeof p.run !== 'function') {
-    throw new Error('Engine plugin needs run()');
+  if (kind === "engine" && typeof p.run !== "function") {
+    throw new Error("Engine plugin needs run()");
   }
-  if (kind === 'dataset' && typeof p.fetchDataset !== 'function') {
-    throw new Error('Dataset plugin needs fetchDataset()');
+  if (kind === "dataset" && typeof p.fetchDataset !== "function") {
+    throw new Error("Dataset plugin needs fetchDataset()");
   }
-  if (kind === 'component' && typeof p.mount !== 'function') {
-    throw new Error('Component plugin needs mount()');
+  if (kind === "component" && typeof p.mount !== "function") {
+    throw new Error("Component plugin needs mount()");
   }
-  if (kind === 'storage') {
-    for (const method of ['list', 'read', 'write', 'remove'] as const) {
-      if (typeof p[method] !== 'function') {
+  if (kind === "storage") {
+    for (const method of ["list", "read", "write", "remove"] as const) {
+      if (typeof p[method] !== "function") {
         throw new Error(`Storage plugin needs ${method}()`);
       }
     }

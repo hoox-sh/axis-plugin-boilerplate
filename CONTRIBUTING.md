@@ -4,11 +4,11 @@ Thanks for helping with the **AXIS plugin boilerplate**.
 
 ## Sister repos
 
-| Product | Repo | Website |
-|---------|------|---------|
+| Product  | Repo                                    | Website                              |
+| -------- | --------------------------------------- | ------------------------------------ |
 | **AXIS** | [axis](https://github.com/hoox-sh/axis) | [hoox.sh/axis](https://hoox.sh/axis) |
 | **PYNE** | [pyne](https://github.com/hoox-sh/pyne) | [hoox.sh/pyne](https://hoox.sh/pyne) |
-| **HOOX** | [hoox](https://github.com/hoox-sh/hoox) | [hoox.sh](https://hoox.sh) |
+| **HOOX** | [hoox](https://github.com/hoox-sh/hoox) | [hoox.sh](https://hoox.sh)           |
 
 Plugin contracts live in AXIS (`src/plugins/types.ts`). When AXIS changes a
 required method, update `src/types.ts` and the examples here.

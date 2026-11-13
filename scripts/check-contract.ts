@@ -7,19 +7,19 @@
  * Import built ESM modules and assert the AXIS plugin contract.
  */
 
-import { existsSync } from 'node:fs';
-import { join } from 'node:path';
-import { pathToFileURL } from 'node:url';
-import { assertPlugin } from '../src/helpers';
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+import { pathToFileURL } from "node:url";
+import { assertPlugin } from "../src/helpers";
 
-const root = join(import.meta.dir, '..');
+const root = join(import.meta.dir, "..");
 const files = [
-  'public/plugin.js',
-  'public/examples/source.js',
-  'public/examples/stream.js',
-  'public/examples/engine.js',
-  'public/examples/dataset.js',
-  'public/examples/component.js',
+  "public/plugin.js",
+  "public/examples/source.js",
+  "public/examples/stream.js",
+  "public/examples/engine.js",
+  "public/examples/dataset.js",
+  "public/examples/component.js",
 ];
 
 let failed = 0;

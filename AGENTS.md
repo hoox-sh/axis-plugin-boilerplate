@@ -25,15 +25,15 @@ bun run check
 
 ## Layout
 
-| Path | Role |
-|------|------|
-| `src/manifest.ts` | Plugin id / name / version |
-| `src/plugin.ts` | Default `source` (Hello Source) |
-| `src/types.ts` | Vendored AXIS contracts |
-| `src/helpers.ts` | `assertPlugin`, bars, interval, config |
-| `src/examples/` | One file per loadable kind |
-| `public/` | Built ESM + CORS `_headers` + index |
-| `scripts/` | build / serve / check-contract |
+| Path              | Role                                   |
+| ----------------- | -------------------------------------- |
+| `src/manifest.ts` | Plugin id / name / version             |
+| `src/plugin.ts`   | Default `source` (Hello Source)        |
+| `src/types.ts`    | Vendored AXIS contracts                |
+| `src/helpers.ts`  | `assertPlugin`, bars, interval, config |
+| `src/examples/`   | One file per loadable kind             |
+| `public/`         | Built ESM + CORS `_headers` + index    |
+| `scripts/`        | build / serve / check-contract         |
 
 ## Hard constraints
 

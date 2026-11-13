@@ -3,10 +3,8 @@
 // src/examples/component.ts
 var STYLE_ID = "axis-hello-component-styles";
 function injectStyles() {
-  if (typeof document === "undefined")
-    return;
-  if (document.getElementById(STYLE_ID))
-    return;
+  if (typeof document === "undefined") return;
+  if (document.getElementById(STYLE_ID)) return;
   const style = document.createElement("style");
   style.id = STYLE_ID;
   style.textContent = `
@@ -55,26 +53,33 @@ var exampleComponent = {
   name: "Example Component",
   kind: "component",
   version: "0.1.0",
-  description: "UI slot starter (manager-tab + settings-section). Slots are phase 2 in AXIS.",
+  description:
+    "UI slot starter (manager-tab + settings-section). Slots are phase 2 in AXIS.",
   slots: ["manager-tab", "settings-section", "topbar-action"],
   capabilities: { offline: true },
   mount(slot, el) {
     if (slot === "settings-section") {
-      renderCard(el, "Hello settings", "Replace mount() with your settings form.");
+      renderCard(
+        el,
+        "Hello settings",
+        "Replace mount() with your settings form.",
+      );
     } else if (slot === "topbar-action") {
       el.textContent = "Hello";
     } else {
-      renderCard(el, "Hello AXIS", "Component plugin mounted. Edit src/examples/component.ts.");
+      renderCard(
+        el,
+        "Hello AXIS",
+        "Component plugin mounted. Edit src/examples/component.ts.",
+      );
     }
     return () => {
       el.innerHTML = "";
     };
   },
   init(ctx) {
-    if (typeof document === "undefined")
-      return;
-    if (document.getElementById("axis-hello-fab"))
-      return;
+    if (typeof document === "undefined") return;
+    if (document.getElementById("axis-hello-fab")) return;
     injectStyles();
     const fab = document.createElement("button");
     fab.id = "axis-hello-fab";
@@ -87,13 +92,10 @@ var exampleComponent = {
     document.body.appendChild(fab);
   },
   dispose() {
-    if (typeof document === "undefined")
-      return;
+    if (typeof document === "undefined") return;
     document.getElementById("axis-hello-fab")?.remove();
     document.getElementById(STYLE_ID)?.remove();
-  }
+  },
 };
 var component_default = exampleComponent;
-export {
-  component_default as default
-};
+export { component_default as default };

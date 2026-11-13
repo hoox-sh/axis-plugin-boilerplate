@@ -3,24 +3,24 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { describe, expect, it } from 'bun:test';
-import { existsSync } from 'node:fs';
-import { join } from 'node:path';
-import { pathToFileURL } from 'node:url';
-import { assertPlugin } from '../src/helpers';
+import { describe, expect, it } from "bun:test";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+import { pathToFileURL } from "node:url";
+import { assertPlugin } from "../src/helpers";
 
-const root = join(import.meta.dir, '..');
+const root = join(import.meta.dir, "..");
 
 const files = [
-  ['public/plugin.js', 'source', 'hello-source'],
-  ['public/examples/source.js', 'source', 'example-source'],
-  ['public/examples/stream.js', 'stream', 'example-stream'],
-  ['public/examples/engine.js', 'engine', 'example-engine'],
-  ['public/examples/dataset.js', 'dataset', 'example-dataset'],
-  ['public/examples/component.js', 'component', 'example-component'],
+  ["public/plugin.js", "source", "hello-source"],
+  ["public/examples/source.js", "source", "example-source"],
+  ["public/examples/stream.js", "stream", "example-stream"],
+  ["public/examples/engine.js", "engine", "example-engine"],
+  ["public/examples/dataset.js", "dataset", "example-dataset"],
+  ["public/examples/component.js", "component", "example-component"],
 ] as const;
 
-describe('built ESM modules', () => {
+describe("built ESM modules", () => {
   for (const [rel, kind, id] of files) {
     it(`${rel} exports ${kind}:${id}`, async () => {
       const abs = join(root, rel);

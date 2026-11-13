@@ -16,7 +16,10 @@
       }
       body {
         margin: 0;
-        font: 15px/1.5 ui-sans-serif, system-ui, sans-serif;
+        font:
+          15px/1.5 ui-sans-serif,
+          system-ui,
+          sans-serif;
         background: var(--bg);
         color: var(--text);
       }
@@ -25,10 +28,20 @@
         margin: 48px auto;
         padding: 0 20px;
       }
-      h1 { font-size: 22px; font-weight: 650; letter-spacing: 0.01em; }
-      p, li { color: var(--dim); }
-      a { color: var(--accent); }
-      code, .url {
+      h1 {
+        font-size: 22px;
+        font-weight: 650;
+        letter-spacing: 0.01em;
+      }
+      p,
+      li {
+        color: var(--dim);
+      }
+      a {
+        color: var(--accent);
+      }
+      code,
+      .url {
         font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
         font-size: 13px;
         color: var(--text);
@@ -49,8 +62,8 @@
         Starter for AXIS source, stream, engine, dataset, and component plugins
         (<code>pynescript.axis.plugins.v1</code>). Part of
         <a href="https://hoox.sh">HOOX</a> /
-        <a href="https://hoox.sh/axis">AXIS</a>.
-        Paste a URL below into <strong>Manager → Plugins → Install</strong>.
+        <a href="https://hoox.sh/axis">AXIS</a>. Paste a URL below into
+        <strong>Manager → Plugins → Install</strong>.
       </p>
       <div class="card">
         <div><strong>Default source</strong></div>
@@ -71,13 +84,13 @@
     </main>
     <script>
       const origin = location.origin;
-      const main = origin + '/plugin.js';
-      document.getElementById('main').textContent = main;
-      const kinds = ['source', 'stream', 'engine', 'dataset', 'component'];
-      const ul = document.getElementById('examples');
+      const main = origin + "/plugin.js";
+      document.getElementById("main").textContent = main;
+      const kinds = ["source", "stream", "engine", "dataset", "component"];
+      const ul = document.getElementById("examples");
       for (const kind of kinds) {
-        const li = document.createElement('li');
-        li.innerHTML = '<code>' + origin + '/examples/' + kind + '.js</code>';
+        const li = document.createElement("li");
+        li.innerHTML = "<code>" + origin + "/examples/" + kind + ".js</code>";
         ul.appendChild(li);
       }
     </script>

@@ -5,12 +5,11 @@ var INTERVAL_SEC = {
   m: 60,
   h: 3600,
   d: 86400,
-  w: 604800
+  w: 604800,
 };
 function intervalToSec(interval) {
   const m = /^(\d+)([mhdw])$/.exec(String(interval || "").trim());
-  if (!m)
-    return 86400;
+  if (!m) return 86400;
   const n = parseInt(m[1], 10);
   return Math.max(1, n * (INTERVAL_SEC[m[2]] || 86400));
 }
@@ -20,8 +19,7 @@ function resolveConfig(schema, config) {
     out[k] = def && "default" in def ? def.default : undefined;
   }
   for (const [k, v] of Object.entries(config || {})) {
-    if (v !== undefined)
-      out[k] = v;
+    if (v !== undefined) out[k] = v;
   }
   return out;
 }
@@ -32,11 +30,18 @@ var exampleStream = {
   name: "Example Stream",
   kind: "stream",
   version: "0.1.0",
-  description: "Synthetic poll stream. Replace start() with a WebSocket to a venue or Worker.",
+  description:
+    "Synthetic poll stream. Replace start() with a WebSocket to a venue or Worker.",
   capabilities: { offline: true, transport: "local" },
   configSchema: {
     tickMs: { type: "number", default: 1000, min: 100, label: "Tick (ms)" },
-    volatility: { type: "number", default: 0.005, min: 0, max: 0.5, label: "Volatility" }
+    volatility: {
+      type: "number",
+      default: 0.005,
+      min: 0,
+      max: 0.5,
+      label: "Volatility",
+    },
   },
   start({ interval, onBar, onStatus, lastBar, config }) {
     const cfg = resolveConfig(this.configSchema, config);
@@ -44,18 +49,23 @@ var exampleStream = {
     const tickMs = Math.max(100, Number(cfg.tickMs) || 1000);
     const vol = Number(cfg.volatility) || 0.005;
     let stopped = false;
-    let cur = lastBar ? { ...lastBar } : {
-      time: Math.floor(Date.now() / 1000) - step,
-      open: 100,
-      high: 101,
-      low: 99,
-      close: 100,
-      volume: 100
-    };
-    onStatus({ state: "open", url: "mock://example-stream", detail: "synthetic poll" });
+    let cur = lastBar
+      ? { ...lastBar }
+      : {
+          time: Math.floor(Date.now() / 1000) - step,
+          open: 100,
+          high: 101,
+          low: 99,
+          close: 100,
+          volume: 100,
+        };
+    onStatus({
+      state: "open",
+      url: "mock://example-stream",
+      detail: "synthetic poll",
+    });
     const handle = setInterval(() => {
-      if (stopped)
-        return;
+      if (stopped) return;
       const now = Math.floor(Date.now() / 1000);
       const slot = Math.floor(now / step) * step;
       const drift = (Math.random() - 0.48) * cur.close * vol;
@@ -67,7 +77,7 @@ var exampleStream = {
           low: Math.min(cur.low, close, cur.open),
           close,
           volume: (cur.volume ?? 0) + Math.random() * 50,
-          closed: false
+          closed: false,
         };
       } else {
         const open = cur.close;
@@ -79,7 +89,7 @@ var exampleStream = {
           low: Math.min(open, close),
           close,
           volume: 50 + Math.random() * 200,
-          closed: true
+          closed: true,
         };
       }
       onBar(cur);
@@ -89,9 +99,7 @@ var exampleStream = {
       clearInterval(handle);
       onStatus({ state: "closed" });
     };
-  }
+  },
 };
 var stream_default = exampleStream;
-export {
-  stream_default as default
-};
+export { stream_default as default };

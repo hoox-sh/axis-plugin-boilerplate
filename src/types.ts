@@ -17,16 +17,11 @@
 
 /** Discriminant for registry maps and Settings UI. */
 export type PluginKind =
-  | 'source'
-  | 'stream'
-  | 'engine'
-  | 'storage'
-  | 'dataset'
-  | 'component';
+  "source" | "stream" | "engine" | "storage" | "dataset" | "component";
 
 /** One settings field in a plugin `configSchema`. */
 export interface FieldSchema {
-  type: 'string' | 'number' | 'boolean' | 'select';
+  type: "string" | "number" | "boolean" | "select";
   default?: string | number | boolean;
   label?: string;
   description?: string;
@@ -47,10 +42,10 @@ export interface PluginCapabilities {
   needsNetwork?: boolean;
   needsProxy?: boolean;
   /** Optional transport hint for Connection HUD (else inferred from id). */
-  transport?: 'ws' | 'rest' | 'local' | 'broker';
+  transport?: "ws" | "rest" | "local" | "broker";
 }
 
-export type LogLevel = 'debug' | 'info' | 'warn' | 'error' | 'ok' | string;
+export type LogLevel = "debug" | "info" | "warn" | "error" | "ok" | string;
 
 /** Shared fields on every plugin kind. */
 export interface PluginBase {
@@ -107,9 +102,12 @@ export interface SourceOpts {
 }
 
 export interface SourcePlugin extends PluginBase {
-  kind: 'source';
+  kind: "source";
   fetchHistorical(opts: SourceOpts): Promise<Bar[]>;
-  searchSymbols?(query: string, config?: Record<string, unknown>): Promise<string[]>;
+  searchSymbols?(
+    query: string,
+    config?: Record<string, unknown>,
+  ): Promise<string[]>;
 }
 
 // --- Stream ---
@@ -122,14 +120,14 @@ export interface StreamOpts {
   onBar: (b: Bar) => void;
   onError: (e: Error) => void;
   onStatus: (s: {
-    state: 'open' | 'closed' | 'reconnecting' | string;
+    state: "open" | "closed" | "reconnecting" | string;
     url?: string;
     detail?: string;
   }) => void;
 }
 
 export interface StreamPlugin extends PluginBase {
-  kind: 'stream';
+  kind: "stream";
   /** @returns stop/cleanup function */
   start(opts: StreamOpts): () => void;
 }
@@ -153,7 +151,7 @@ export interface EngineOpts {
 }
 
 export interface RunResult {
-  status: 'success' | 'error';
+  status: "success" | "error";
   plots: (number | null)[];
   series?: Record<string, (number | null)[]>;
   events: Array<{
@@ -187,7 +185,7 @@ export interface RunResult {
 }
 
 export interface EnginePlugin extends PluginBase {
-  kind: 'engine';
+  kind: "engine";
   isReady(): Promise<boolean>;
   run(opts: EngineOpts): Promise<RunResult>;
 }
@@ -203,7 +201,7 @@ export interface ScriptMeta {
   createdAt?: number;
   revision?: string;
   tags?: string[];
-  scriptKind?: 'indicator' | 'strategy' | 'library' | 'unknown';
+  scriptKind?: "indicator" | "strategy" | "library" | "unknown";
   pineVersion?: string;
 }
 
@@ -228,21 +226,36 @@ export interface StorageStatus {
 }
 
 export interface StoragePlugin extends PluginBase {
-  kind: 'storage';
-  list(opts?: { prefix?: string; config?: Record<string, unknown> }): Promise<ScriptMeta[]>;
+  kind: "storage";
+  list(opts?: {
+    prefix?: string;
+    config?: Record<string, unknown>;
+  }): Promise<ScriptMeta[]>;
   read(id: string, config?: Record<string, unknown>): Promise<ScriptDocument>;
-  write(doc: ScriptDocument, config?: Record<string, unknown>): Promise<ScriptMeta>;
+  write(
+    doc: ScriptDocument,
+    config?: Record<string, unknown>,
+  ): Promise<ScriptMeta>;
   remove(id: string, config?: Record<string, unknown>): Promise<void>;
-  saveDraft?(doc: { content: string; name?: string }, config?: Record<string, unknown>): Promise<void>;
-  loadDraft?(config?: Record<string, unknown>): Promise<{ content: string; name?: string } | null>;
-  sync?(direction: 'push' | 'pull' | 'both', config?: Record<string, unknown>): Promise<SyncResult>;
+  saveDraft?(
+    doc: { content: string; name?: string },
+    config?: Record<string, unknown>,
+  ): Promise<void>;
+  loadDraft?(
+    config?: Record<string, unknown>,
+  ): Promise<{ content: string; name?: string } | null>;
+  sync?(
+    direction: "push" | "pull" | "both",
+    config?: Record<string, unknown>,
+  ): Promise<SyncResult>;
   getStatus?(config?: Record<string, unknown>): Promise<StorageStatus>;
 }
 
 // --- Dataset ---
 
-export type DatasetKind = 'ohlcv' | 'scalar_series' | 'multi_series' | 'events' | 'table';
-export type Finality = 'pending' | 'safe' | 'finalized' | 'unknown';
+export type DatasetKind =
+  "ohlcv" | "scalar_series" | "multi_series" | "events" | "table";
+export type Finality = "pending" | "safe" | "finalized" | "unknown";
 
 export interface OnchainInstrument {
   chainId: string;
@@ -263,7 +276,7 @@ export interface EventPoint {
   time: number;
   type: string;
   title?: string;
-  severity?: 'info' | 'warn' | 'critical';
+  severity?: "info" | "warn" | "critical";
   price?: number;
   payload?: Record<string, unknown>;
 }
@@ -295,19 +308,27 @@ export interface DatasetFetchOpts {
 }
 
 export interface DatasetPlugin extends PluginBase {
-  kind: 'dataset';
+  kind: "dataset";
   fetchDataset(opts: DatasetFetchOpts): Promise<OnchainDataset>;
-  searchInstruments?(query: string, config?: Record<string, unknown>): Promise<OnchainInstrument[]>;
+  searchInstruments?(
+    query: string,
+    config?: Record<string, unknown>,
+  ): Promise<OnchainInstrument[]>;
 }
 
 // --- Component ---
 
-export type ComponentSlot = 'manager-tab' | 'results-tab' | 'topbar-action' | 'settings-section';
+export type ComponentSlot =
+  "manager-tab" | "results-tab" | "topbar-action" | "settings-section";
 
 export interface ComponentPlugin extends PluginBase {
-  kind: 'component';
+  kind: "component";
   slots: ComponentSlot[];
-  mount(slot: string, el: HTMLElement, api: Record<string, unknown>): () => void;
+  mount(
+    slot: string,
+    el: HTMLElement,
+    api: Record<string, unknown>,
+  ): () => void;
 }
 
 export type AnyPlugin =

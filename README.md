@@ -13,13 +13,13 @@ Use this GitHub **template** to ship an ES module AXIS can install from URL
 
 Part of the **[HOOX](https://hoox.sh)** open trading stack:
 
-| Product | Role | Repo |
-|---------|------|------|
-| **HOOX** | Edge trading framework | [hoox-sh/hoox](https://github.com/hoox-sh/hoox) |
-| **PYNE** | Pine Script™ toolchain + Pro API | [hoox-sh/pyne](https://github.com/hoox-sh/pyne) |
-| **AXIS** | Charting PWA (host) | [hoox-sh/axis](https://github.com/hoox-sh/axis) |
-| **This repo** | Plugin starter (source / stream / engine / dataset / component) | [hoox-sh/axis-plugin-boilerplate](https://github.com/hoox-sh/axis-plugin-boilerplate) |
-| **pyne-agent-worker** | NL → PYNE component plugin | [hoox-sh/pyne-agent-worker](https://github.com/hoox-sh/pyne-agent-worker) |
+| Product               | Role                                                            | Repo                                                                                  |
+| --------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| **HOOX**              | Edge trading framework                                          | [hoox-sh/hoox](https://github.com/hoox-sh/hoox)                                       |
+| **PYNE**              | Pine Script™ toolchain + Pro API                                | [hoox-sh/pyne](https://github.com/hoox-sh/pyne)                                       |
+| **AXIS**              | Charting PWA (host)                                             | [hoox-sh/axis](https://github.com/hoox-sh/axis)                                       |
+| **This repo**         | Plugin starter (source / stream / engine / dataset / component) | [hoox-sh/axis-plugin-boilerplate](https://github.com/hoox-sh/axis-plugin-boilerplate) |
+| **pyne-agent-worker** | NL → PYNE component plugin                                      | [hoox-sh/pyne-agent-worker](https://github.com/hoox-sh/pyne-agent-worker)             |
 
 **Docs:** [Plugin contracts](https://hoox.sh/axis/docs/plugins/contracts) ·
 [Dynamic loader](https://hoox.sh/axis/docs/plugins/dynamic-loader) ·
@@ -59,28 +59,28 @@ and restore on the next visit.
 
 ## Plugin kinds
 
-| Kind | Required surface | URL install |
-| --- | --- | --- |
-| `source` | `fetchHistorical(opts) → Bar[]` | yes |
-| `stream` | `start(opts) → stop()` | yes |
-| `engine` | `isReady()`, `run(opts) → RunResult` | yes |
-| `dataset` | `fetchDataset(opts) → OnchainDataset` | yes |
-| `component` | `slots`, `mount(slot, el, api) → unmount` | yes |
-| `storage` | `list` / `read` / `write` / `remove` | **rejected** — use built-in `local` / `cloud` / `git` |
+| Kind        | Required surface                          | URL install                                           |
+| ----------- | ----------------------------------------- | ----------------------------------------------------- |
+| `source`    | `fetchHistorical(opts) → Bar[]`           | yes                                                   |
+| `stream`    | `start(opts) → stop()`                    | yes                                                   |
+| `engine`    | `isReady()`, `run(opts) → RunResult`      | yes                                                   |
+| `dataset`   | `fetchDataset(opts) → OnchainDataset`     | yes                                                   |
+| `component` | `slots`, `mount(slot, el, api) → unmount` | yes                                                   |
+| `storage`   | `list` / `read` / `write` / `remove`      | **rejected** — use built-in `local` / `cloud` / `git` |
 
 `Bar.time` is **unix seconds**. Engine script errors should return
 `status: 'error'` rather than throw.
 
 This repo:
 
-| URL | id | kind |
-| --- | --- | --- |
-| `/plugin.js` | `hello-source` | source (default) |
-| `/examples/source.js` | `example-source` | source |
-| `/examples/stream.js` | `example-stream` | stream |
-| `/examples/engine.js` | `example-engine` | engine |
-| `/examples/dataset.js` | `example-dataset` | dataset |
-| `/examples/component.js` | `example-component` | component |
+| URL                      | id                  | kind             |
+| ------------------------ | ------------------- | ---------------- |
+| `/plugin.js`             | `hello-source`      | source (default) |
+| `/examples/source.js`    | `example-source`    | source           |
+| `/examples/stream.js`    | `example-stream`    | stream           |
+| `/examples/engine.js`    | `example-engine`    | engine           |
+| `/examples/dataset.js`   | `example-dataset`   | dataset          |
+| `/examples/component.js` | `example-component` | component        |
 
 ## Export shape
 
@@ -88,7 +88,7 @@ AXIS `loadPluginFromUrl` accepts any of:
 
 ```js
 export default plugin;
-export const plugin = { id, name, kind, /* … */ };
+export const plugin = { id, name, kind /* … */ };
 // or the module namespace itself
 ```
 
@@ -96,15 +96,27 @@ The object must include `id` and `kind`, plus the method for that kind.
 
 ```ts
 export default {
-  id: 'my-source',
-  name: 'My Source',
-  kind: 'source',
-  description: 'Shown in Manager',
-  capabilities: { needsNetwork: true, transport: 'rest' },
+  id: "my-source",
+  name: "My Source",
+  kind: "source",
+  description: "Shown in Manager",
+  capabilities: { needsNetwork: true, transport: "rest" },
   configSchema: {
-    baseUrl: { type: 'string', default: 'https://example.com', label: 'Base URL' },
+    baseUrl: {
+      type: "string",
+      default: "https://example.com",
+      label: "Base URL",
+    },
   },
-  async fetchHistorical({ symbol, interval, limit, startTime, endTime, signal, config }) {
+  async fetchHistorical({
+    symbol,
+    interval,
+    limit,
+    startTime,
+    endTime,
+    signal,
+    config,
+  }) {
     // return [{ time /* unix sec */, open, high, low, close, volume? }]
     return [];
   },
@@ -129,11 +141,11 @@ browser origins, or stay offline.
 AXIS **production** builds default-deny remote plugin hosts. Dev (Vite) is open
 after scheme checks.
 
-| How you host | What AXIS needs |
-| --- | --- |
-| Same-origin `/plugins/….js` in the AXIS PWA | nothing — preferred for prod |
-| This boilerplate on localhost | works in `bun run dev` |
-| Cloudflare Pages / any https host | add the host to AXIS `VITE_PLUGIN_REMOTE_ALLOW`, or set `VITE_ALLOW_REMOTE_PLUGINS=1` |
+| How you host                                | What AXIS needs                                                                       |
+| ------------------------------------------- | ------------------------------------------------------------------------------------- |
+| Same-origin `/plugins/….js` in the AXIS PWA | nothing — preferred for prod                                                          |
+| This boilerplate on localhost               | works in `bun run dev`                                                                |
+| Cloudflare Pages / any https host           | add the host to AXIS `VITE_PLUGIN_REMOTE_ALLOW`, or set `VITE_ALLOW_REMOTE_PLUGINS=1` |
 
 Dangerous schemes (`javascript:`, `vbscript:`, HTML `data:`) are rejected.
 Treat plugin URLs as **executable code**.
